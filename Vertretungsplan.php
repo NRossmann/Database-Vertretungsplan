@@ -1,14 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+
 <?php
+$a = 0;
 $servername = "localhost";
 $username = "Lehrer1";
 $password = "password";
+$dbname = "Vertretungspläne";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password);
-
+$conn = mysqli_connect($servername, $username, $password, $dbname);
 // Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
-echo "Connected successfully";
+
+$sql = "SELECT id, firstname, lastname FROM MyGuests";
+$result = mysqli_query($conn, $sql);
+$b = mysqli_num_rows($result);
+if ($b > $a) {
+    // output data of each row
+    while($row = mysqli_fetch_assoc($result)) {
+        echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
+    }
+} else {
+    echo "0 results";
+}
+
+mysqli_close($conn);
 ?>
+
+</body>
+</html>
