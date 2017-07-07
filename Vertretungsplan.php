@@ -1,35 +1,33 @@
-<!DOCTYPE html>
-<html>
-<body>
-
 <?php
-$a = 0;
-$servername = "localhost";
-$username = "Lehrer1";
-$password = "password";
-$dbname = "Vertretungspläne";
-
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
+$db_link = mysqli_connect (
+                     localhos, 
+                     Lehrer1, 
+                     password, 
+                     Vertretungspläne
+                    );
+ 
 $sql = "SELECT * FROM Vertretungsplan_heute";
-$result = mysqli_query($conn, $sql);
-$b = mysqli_num_rows($result);
-if ($b > $a) {
-    // output data of each row
-    while($row = mysqli_fetch_assoc($result)) {
-        echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
-    }
-} else {
-    echo "0 results";
+ 
+$db_erg = mysqli_query( $db_link, $sql );
+if ( ! $db_erg )
+{
+  die('Ungültige Abfrage: ' . mysqli_error());
 }
-
-mysqli_close($conn);
+ 
+echo '<table border="1">';
+while ($zeile = mysqli_fetch_array( $db_erg, MYSQL_ASSOC))
+{
+  echo "<tr>";
+  echo "<td>". $zeile['Klasse'] . "</td>";
+  echo "<td>". $zeile['Stunde'] . "</td>";
+  echo "<td>". $zeile['Vertreter'] . "</td>";
+  echo "<td>". $zeile['Art'] . "</td>";
+  echo "<td>". $zeile['Lehrer'] . "</td>";
+  echo "<td>". $zeile['Vertretungs_Text'] . "</td>";
+  echo "<td>". $zeile['Raum'] . "</td>";
+  echo "</tr>";
+}
+echo "</table>";
+ 
+mysqli_free_result( $db_erg );
 ?>
-
-</body>
-</html>
