@@ -16,7 +16,7 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT id, firstname, lastname FROM MyGuests";
+$sql = "SELECT * FROM Vertretungsplan_heute";
 $result = mysqli_query($conn, $sql);
 $b = mysqli_num_rows($result);
 if ($b > $a) {
